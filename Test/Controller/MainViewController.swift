@@ -32,12 +32,9 @@ class MainViewController: UIViewController{
     private func getData(){
         KRProgressHUD.show()
         Alamofire.request(URL(string: APIKey.BASE_API_URL.rawValue)!, method: .get, parameters: nil, encoding: URLEncoding.default, headers: nil).responseJSON {[weak self] (response) in
-            if let self = self {
-                self.responseData = response.data
-                self.decodeResponseData()
-            }else{
-                return
-            }
+            guard let self = self else{ return }
+            self.responseData = response.data
+            self.decodeResponseData()
         }
     }
     private func decodeResponseData(){
